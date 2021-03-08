@@ -1,0 +1,62 @@
+.form {
+  min-width: 40%;
+  min-height: 40%;
+  padding: 1em;
+  border: 1px solid black;
+  border-radius: 0.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+input {
+  margin: 0 0.25em;
+  padding: 0.25em;
+}
+
+.formRow {
+  margin: 1em 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+span:not(.seasons) {
+  color: red;
+  display: inline-block;
+
+  &:after {
+    content: '!';
+  }
+}
+
+.seasonText {
+  margin: 0.4em 0;
+}
+
+input[type='radio'] + label,
+input[type='checkbox'] + label {
+  margin: 0.4em;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  cursor: pointer;
+  width: 1.25em;
+  height: 1.25em;
+  //   font-size: 2rem;
+}
+
+// input[type='checkbox'] + label {
+//   font-size: 1.1rem;
+//   margin: 0.4em;
+// }
+
+.submitButton {
+  margin: 1em 0;
+  width: 100%;
+  padding: 0.6em 1em;
+  text-transform: capitalize;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
