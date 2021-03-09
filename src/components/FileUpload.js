@@ -1,24 +1,40 @@
+import { useState } from 'react';
+import styles from './FileUpload.module.scss';
+
+const readFileContent = (file) => {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onloadend = () => {
+      resolve(fr.result.split('\r\n').filter((line) => line));
+    };
+    fr.onerror = () => {
+      reject('There was an error reading the file');
+    };
+    fr.readAsText(file);
+  });
+};
+
 const FileUpload = () => {
-  const handleChange = (e) => {
-    const files = [...e.target.files];
+  const [files, setFiles] = useState([]);
 
-    const fileList = Object.values(files);
-    console.log(fileList);
+  const handleChange = async (e) => {
+    const inputFiles = [...e.target.files];
 
-    const fileNames = fileList.map((file) => {
-      const split = file.name.split(' ');
-      return split;
-    });
+    try {
+      const fileContent = await Promise.all(
+        Object.values(inputFiles).map(readFileContent)
+      );
 
-    // const reader = new FileReader();
-    // reader.onload = (e) => {
-    //   console.log(reader);
-    //   const csv = reader.result;
-    //   console.log(csv);
-    //   const lines = csv.split('\n');
-    //   console.log(lines);
-    // };
-    // reader.readAsText(fileList[0]);
+      const filesArray = inputFiles.map((file, index) => ({
+        name: file.name,
+        lineText: fileContent[index],
+      }));
+
+      setFiles(filesArray);
+    } catch (error) {
+      console.log(error);
+      // setError(error);
+    }
   };
 
   return (
@@ -33,6 +49,20 @@ const FileUpload = () => {
         onChange={handleChange}
         multiple
       />
+      {files && (
+        <div className={styles.filePreview}>
+          <p>Preview:</p>
+          {files.map((file, index) => {
+            const preview = file.lineText[0].slice(0, 25);
+            return (
+              <p key={file.name}>
+                <span>File {index} preview: </span>
+                {preview}...
+              </p>
+            );
+          })}
+        </div>
+      )}
       {/* {errors.file && <span>This field is required</span>} */}
     </div>
   );

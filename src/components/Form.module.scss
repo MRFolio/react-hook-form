@@ -19,14 +19,14 @@ input {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-}
 
-span:not(.seasons) {
-  color: red;
-  display: inline-block;
+  span:not(.seasons) {
+    color: red;
+    display: inline-block;
 
-  &:after {
-    content: '!';
+    &:after {
+      content: '!';
+    }
   }
 }
 
@@ -46,11 +46,6 @@ input[type='radio'] {
   height: 1.25em;
   //   font-size: 2rem;
 }
-
-// input[type='checkbox'] + label {
-//   font-size: 1.1rem;
-//   margin: 0.4em;
-// }
 
 .submitButton {
   margin: 1em 0;
