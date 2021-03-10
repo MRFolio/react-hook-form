@@ -5,7 +5,7 @@ const readFileContent = (file) => {
   return new Promise((resolve, reject) => {
     const fr = new FileReader();
     fr.onloadend = () => {
-      resolve(fr.result.split('\r\n').filter((line) => line));
+      resolve(fr.result.split('\r\n').filter(Boolean));
     };
     fr.onerror = () => {
       reject('There was an error reading the file');
@@ -21,9 +21,7 @@ const FileUpload = () => {
     const inputFiles = [...e.target.files];
 
     try {
-      const fileContent = await Promise.all(
-        Object.values(inputFiles).map(readFileContent)
-      );
+      const fileContent = await Promise.all(inputFiles.map(readFileContent));
 
       const filesArray = inputFiles.map((file, index) => ({
         name: file.name,
