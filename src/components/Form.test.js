@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import { render, screen } from '@testing-library/react';
 import Form from './Form';
 
 describe('Form tests', () => {
@@ -33,12 +34,35 @@ describe('Form tests', () => {
   });
 });
 
-describe('input value', () => {
-  it('updates on change', () => {
+describe('button', () => {
+  it('button has button attribute', () => {
     render(<Form />);
-    const surnameInput = screen.queryByPlaceHolderText('Enter surname...');
-    fireEvent.change(surnameInput, { target: { value: 'Bird' } });
-    expect(surnameInput.value).toBe('Bird');
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('type', 'submit');
+    expect(button).not.toHaveAttribute('type', 'button');
+  });
+});
+
+describe('svg render', () => {
+  it('svg visible', () => {
+    render(<Form />);
+    expect(screen.getByTestId('html-element')).toBeVisible();
+    expect(screen.getByTestId('html-element')).not.toBeEmptyDOMElement();
+    expect(screen.getByTestId('svg-element')).toBeVisible();
+  });
+  it('checkbox not checked', () => {
+    render(<Form />);
+    const inputCheckboxUnchecked = screen.getByLabelText(
+      'Do you wish to subscribe to the newsletter?'
+    );
+    expect(inputCheckboxUnchecked).not.toBeChecked();
+  });
+});
+
+describe('checkbox not to be required', () => {
+  it('checkbox not to be required', () => {
+    render(<Form />);
+    expect(screen.queryByRole('checkbox')).not.toBeRequired();
   });
 });
 
@@ -49,11 +73,16 @@ describe('Stack', () => {
     stack.push('3');
   });
 
+  afterEach(() => {
+    // cleanup on exiting
+    stack.pop();
+  });
+
   it('length should be 3', () => {
     expect(stack).toHaveLength(3);
   });
 
   it('should have 3 added to stack', () => {
-    expect(stack).toEqual(['1', '2', '3', '3']);
+    expect(stack).toEqual(['1', '2', '3']);
   });
 });

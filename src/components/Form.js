@@ -41,7 +41,6 @@ const Form = () => {
     } catch (error) {
       console.log(error);
     }
-    // console.log(data);
   };
 
   return (
@@ -76,6 +75,7 @@ const Form = () => {
           type="text"
           name="surname"
           id="surname"
+          data-testid="surname"
           placeholder="Enter surname..."
         />
         {errors.name && errors.name.type === 'required' && (
@@ -102,20 +102,8 @@ const Form = () => {
           </span>
         ))}
       </div>
-      {/* <div>
-        <label htmlFor="file">Choose a file to upload: </label>
-        <input
-          ref={register({ required: true })}
-          type="file"
-          name="uploadedFile"
-          id="uploadedFile"
-          accept=".pdf,.txt, image/*"
-          multiple
-        />
-        {errors.file && <span>This field is required</span>}
-      </div> */}
       <div className={styles.formRow}>
-        <label htmlFor="hobbies">
+        <label htmlFor="subscribe">
           Do you wish to subscribe to the newsletter?
         </label>
         <input
@@ -124,10 +112,15 @@ const Form = () => {
           type="checkbox"
           name="subscribe"
           id="subscribe"
+          role="checkbox"
           // value={subscribe}
         />
         {errors.subscribe && <span>This field is required</span>}
       </div>
+      <span data-testid="html-element">
+        <span>Html Element</span>
+      </span>
+      <svg data-testid="svg-element"></svg>
       <div>
         <button type="submit" className={styles.submitButton}>
           submit
