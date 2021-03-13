@@ -1,61 +1,99 @@
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Form from './Form';
 
 describe('Form tests', () => {
-  it('firstName input renders properly', () => {
+  beforeEach(() => {
     render(<Form />);
+  });
+
+  it('firstName input renders properly', () => {
     const input = screen.getByLabelText('First name:');
     expect(input).toBeTruthy;
   });
 
+  it('firstName user input change firstName', () => {
+    const input = screen.getByLabelText('First name:');
+    userEvent.type(input, 'Hello, World!');
+    expect(input).toHaveValue('Hello, World!');
+  });
+
+  it('firstName user input change with not matching input values', () => {
+    const input = screen.getByLabelText('Surname:');
+    userEvent.type(input, 'Hire me');
+    expect(input).not.toHaveValue('Hello, World!');
+  });
+
   it('Surname input renders properly', () => {
-    render(<Form />);
     const input = screen.getByLabelText('Surname:');
     expect(input).toBeTruthy;
   });
 
+  it('Surname user input change', () => {
+    const input = screen.getByLabelText('Surname:');
+    userEvent.type(input, 'Hello, World!');
+    expect(input).toHaveValue('Hello, World!');
+  });
+
+  it('Surname user input change with not matching input values', () => {
+    const input = screen.getByLabelText('Surname:');
+    userEvent.type(input, 'tere');
+    expect(input).not.toHaveValue('Hello, World!');
+  });
+
   it('button renders properly', () => {
-    render(<Form />);
     const button = screen.getByRole('button', { type: 'button' });
     expect(button).toBeTruthy;
   });
 
   it('correct button className', () => {
-    render(<Form />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('submitButton');
   });
 
   it('incorrect button className', () => {
-    render(<Form />);
     const button = screen.getByRole('button');
     expect(button).not.toHaveClass('tere');
   });
 });
 
 describe('button', () => {
-  it('button has button attribute', () => {
+  beforeEach(() => {
     render(<Form />);
+  });
+
+  it('button has button attribute', () => {
     const button = screen.getByRole('button');
+
     expect(button).toHaveAttribute('type', 'submit');
     expect(button).not.toHaveAttribute('type', 'button');
   });
 });
 
-describe('svg render', () => {
-  it('svg visible', () => {
+describe('checkbox checked', () => {
+  beforeEach(() => {
     render(<Form />);
-    expect(screen.getByTestId('html-element')).toBeVisible();
-    expect(screen.getByTestId('html-element')).not.toBeEmptyDOMElement();
-    expect(screen.getByTestId('svg-element')).toBeVisible();
   });
+
   it('checkbox not checked', () => {
-    render(<Form />);
-    const inputCheckboxUnchecked = screen.getByLabelText(
-      'Do you wish to subscribe to the newsletter?'
-    );
-    expect(inputCheckboxUnchecked).not.toBeChecked();
+    const inputCheckbox = screen.getByRole('checkbox');
+    expect(inputCheckbox).not.toBeChecked();
+  });
+
+  it('doubleClick leaves checkbox unchecked', () => {
+    // const inputCheckbox = screen.getByLabelText(
+    //   'Do you wish to subscribe to the newsletter?'
+    // );
+    const inputCheckbox = screen.getByRole('checkbox');
+    userEvent.dblClick(inputCheckbox);
+    expect(inputCheckbox).not.toBeChecked();
+  });
+
+  it('click leaves checkbox checked', () => {
+    const inputCheckbox = screen.getByRole('checkbox');
+    fireEvent.click(inputCheckbox);
+    expect(inputCheckbox).toBeChecked();
   });
 });
 
@@ -66,6 +104,16 @@ describe('checkbox not to be required', () => {
   });
 });
 
+describe('svg renders properly', () => {
+  it('svg visible', () => {
+    render(<Form />);
+    const htmlElement = screen.getByTestId('html-element');
+    expect(htmlElement).toBeVisible();
+    expect(htmlElement).not.toBeEmptyDOMElement();
+    expect(screen.getByTestId('svg-element')).toBeVisible();
+  });
+});
+
 describe('Stack', () => {
   let stack = ['1', '2'];
 
@@ -73,8 +121,8 @@ describe('Stack', () => {
     stack.push('3');
   });
 
+  // afterEach(cleanup);
   afterEach(() => {
-    // cleanup on exiting
     stack.pop();
   });
 
