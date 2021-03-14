@@ -19,14 +19,14 @@ input {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
 
-  span:not(.seasons) {
-    color: red;
-    display: inline-block;
+.errorMessage {
+  color: red;
+  display: inline-block;
 
-    &:after {
-      content: '!';
-    }
+  &:after {
+    content: '!';
   }
 }
 

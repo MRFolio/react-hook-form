@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import FileUpload from './FileUpload';
 import styles from './Form.module.scss';
 
 const seasons = ['spring', 'summer', 'autumn', 'winter'];
@@ -22,6 +23,7 @@ const Form = () => {
   //   setFormInput({ ...formInput, [name]: value });
   // };
 
+  console.log(errors);
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
@@ -47,7 +49,7 @@ const Form = () => {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h2>Fill in the form to win prizes!</h2>
       <div className={styles.formRow}>
-        <label htmlFor="name">First name:</label>
+        <label htmlFor="name">First name:* </label>
         <input
           ref={register({
             required: true,
@@ -59,14 +61,16 @@ const Form = () => {
           placeholder="Enter name..."
         />
         {errors.name && errors.name.type === 'required' && (
-          <span>This field is required</span>
+          <span className={styles.errorMessage}>This field is required</span>
         )}
         {errors.name && errors.name.type === 'minLength' && (
-          <span>Minimum of 2 characters is required</span>
+          <span className={styles.errorMessage}>
+            Minimum of 2 characters is required
+          </span>
         )}
       </div>
       <div className={styles.formRow}>
-        <label htmlFor="name">Surname:</label>
+        <label htmlFor="name">Surname:*</label>
         <input
           ref={register({
             required: true,
@@ -78,11 +82,13 @@ const Form = () => {
           data-testid="surname"
           placeholder="Enter surname..."
         />
-        {errors.name && errors.name.type === 'required' && (
-          <span>This field is required</span>
+        {errors.surname && errors.surname.type === 'required' && (
+          <span className={styles.errorMessage}>This field is required</span>
         )}
-        {errors.name && errors.name.type === 'minLength' && (
-          <span>Minimum of 2 characters is required</span>
+        {errors.surname && errors.surname.type === 'minLength' && (
+          <span className={styles.errorMessage}>
+            Minimum of 2 characters is required
+          </span>
         )}
       </div>
       <div className={styles.formRow}>
@@ -98,7 +104,11 @@ const Form = () => {
               // onChange={handleChange}
             />
             <label htmlFor={season}>{season}</label>
-            {errors.favoriteSeason && <span>This field is required</span>}
+            {errors.favoriteSeason && (
+              <span className={styles.errorMessage}>
+                This field is required
+              </span>
+            )}
           </span>
         ))}
       </div>
@@ -107,20 +117,27 @@ const Form = () => {
           Do you wish to subscribe to the newsletter?
         </label>
         <input
-          ref={register}
-          // onChange={handleChange}
+          ref={register({ required: true })}
           type="checkbox"
           name="subscribe"
           id="subscribe"
-          role="checkbox"
-          // value={subscribe}
         />
-        {errors.subscribe && <span>This field is required</span>}
+        {errors.subscribe && (
+          <span className={styles.errorMessage}>This field is required</span>
+        )}
       </div>
       <span data-testid="html-element">
         <span>Html Element</span>
       </span>
       <svg data-testid="svg-element"></svg>
+      <FileUpload
+        label="Choose a file to upload:"
+        register={register}
+        required
+      />
+      {errors.uploadedFile && (
+        <span className={styles.errorMessage}>File upload is required</span>
+      )}
       <div>
         <button type="submit" className={styles.submitButton}>
           submit

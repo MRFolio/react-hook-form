@@ -14,8 +14,13 @@ const readFileContent = (file) => {
   });
 };
 
-const FileUpload = () => {
+const FileUpload = ({ label, register, required }) => {
   const [files, setFiles] = useState([]);
+  const [collapsedPreview, setCollapsedPreview] = useState(false);
+
+  const handleClick = () => {
+    setCollapsedPreview(!collapsedPreview);
+  };
 
   const handleChange = async (e) => {
     const inputFiles = [...e.target.files];
@@ -36,10 +41,10 @@ const FileUpload = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="file">Choose a file to upload: </label>
+    <section className={styles.fileContainer}>
+      <label htmlFor="file">{label}</label>
       <input
-        // ref={register({ required: true })}
+        ref={register({ required })}
         type="file"
         name="uploadedFile"
         id="uploadedFile"
@@ -48,21 +53,29 @@ const FileUpload = () => {
         multiple
       />
       {files && (
-        <div className={styles.filePreview}>
-          <p>Preview:</p>
+        <div className={styles.filePreviewContainer}>
           {files.map((file, index) => {
-            const preview = file.lineText[0].slice(0, 25);
+            const preview = file.lineText[0].slice(0, 20) + '...';
+            const full = file.lineText;
             return (
-              <p key={file.name}>
-                <span>File {index} preview: </span>
-                {preview}...
-              </p>
+              <div key={file.name} className={styles.singleFilePreview}>
+                <h4 className={styles.previewHeading}>
+                  ({index + 1}) {file.name} preview:
+                </h4>
+                <p>{!collapsedPreview ? preview : full}</p>
+                <button
+                  className={styles.expandBtn}
+                  onClick={handleClick}
+                  type="button"
+                >
+                  {collapsedPreview ? 'Read less...' : 'Read more...'}
+                </button>
+              </div>
             );
           })}
         </div>
       )}
-      {/* {errors.file && <span>This field is required</span>} */}
-    </div>
+    </section>
   );
 };
 
