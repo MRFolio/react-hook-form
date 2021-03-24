@@ -23,7 +23,6 @@ const Form = () => {
   //   setFormInput({ ...formInput, [name]: value });
   // };
 
-  console.log(errors);
   const onSubmit = async (data, e) => {
     e.preventDefault();
 
@@ -37,7 +36,6 @@ const Form = () => {
         }
       );
       const result = await response.json();
-      console.log(result);
 
       return result;
     } catch (error) {
@@ -49,7 +47,7 @@ const Form = () => {
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <h2>Fill in the form to win prizes!</h2>
       <div className={styles.formRow}>
-        <label htmlFor="name">First name:* </label>
+        <label htmlFor="name">First name:</label>
         <input
           ref={register({
             required: true,
@@ -70,7 +68,7 @@ const Form = () => {
         )}
       </div>
       <div className={styles.formRow}>
-        <label htmlFor="name">Surname:*</label>
+        <label htmlFor="name">Surname:</label>
         <input
           ref={register({
             required: true,
