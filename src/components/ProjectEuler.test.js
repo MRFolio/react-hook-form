@@ -1,4 +1,9 @@
-import { multiplesOf3and5, palindromeChecker, rot13 } from './ProjectEuler';
+import {
+  fiboEvenSum,
+  multiplesOf3and5,
+  palindromeChecker,
+  rot13,
+} from './ProjectEuler';
 
 describe('palindrome checker unit tests', () => {
   it('returns true when input is a palindrome', () => {
@@ -62,5 +67,38 @@ describe('multiple of 3 and 5 unit tests', () => {
 
   it('number 2 should return a sum of 0', () => {
     expect(multiplesOf3and5(2)).toBe(0);
+  });
+});
+
+describe('fiboEvenSum unit tests', () => {
+  it('should return a number', () => {
+    const result = fiboEvenSum(10);
+    expect(typeof result).toBe('number');
+  });
+
+  it('should return even number', () => {
+    const result = fiboEvenSum(10);
+    const isEven = result % 2 === 0;
+    expect(isEven).toBeTruthy();
+  });
+
+  it('number 8 should return 10', () => {
+    expect(fiboEvenSum(8)).toBe(10);
+  });
+
+  it('number 10 should return 10', () => {
+    expect(fiboEvenSum(10)).toBe(10);
+  });
+
+  it('number 34 should return 44', () => {
+    expect(fiboEvenSum(34)).toBe(44);
+  });
+
+  it('number 60 should return 44', () => {
+    expect(fiboEvenSum(60)).toBe(44);
+  });
+
+  it('number 1000 should return 798', () => {
+    expect(fiboEvenSum(1000)).toBe(798);
   });
 });
