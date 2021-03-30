@@ -1,5 +1,6 @@
 import {
   fiboEvenSum,
+  largestPrimeFactor,
   multiplesOf3and5,
   palindromeChecker,
   rot13,
@@ -100,5 +101,32 @@ describe('fiboEvenSum unit tests', () => {
 
   it('number 1000 should return 798', () => {
     expect(fiboEvenSum(1000)).toBe(798);
+  });
+});
+
+describe('largestPrimeFactor unit tests', () => {
+  it('should return a number', () => {
+    const result = largestPrimeFactor(2);
+    expect(typeof result).toBe('number');
+  });
+
+  it('2 should return 2', () => {
+    expect(largestPrimeFactor(2)).toBe(2);
+  });
+
+  it('3 should return 3', () => {
+    expect(largestPrimeFactor(3)).toBe(3);
+  });
+
+  it('5 should return 5', () => {
+    expect(largestPrimeFactor(5)).toBe(5);
+  });
+
+  it('13195 should return 29', () => {
+    expect(largestPrimeFactor(13195)).toBe(29);
+  });
+
+  it('600851475143 should return 6857', () => {
+    expect(largestPrimeFactor(600851475143)).toBe(6857);
   });
 });

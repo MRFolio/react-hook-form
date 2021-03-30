@@ -68,3 +68,47 @@ export const fiboEvenSum = (n) => {
 };
 
 console.log(fiboEvenSum(8));
+
+// (function IIFE() {
+
+// })()
+
+// Problem 3: Largest prime factor
+// The prime factors of 13195 are 5, 7, 13 and 29.
+
+// What is the largest prime factor of the given number?
+
+export const largestPrimeFactor = (number) => {
+  let prime = 2;
+  let max = 1;
+  while (prime <= number) {
+    if (number % prime === 0) {
+      max = prime;
+      number = number / prime;
+    } else {
+      prime += 1;
+    }
+  }
+  return max;
+};
+
+console.log(largestPrimeFactor(3));
+
+// Return the length of the longest word in the provided sentence.
+
+// Your response should be a number.
+
+const findLongestWordLength = (str) => {
+  const splitArray = str.split(' ');
+  let longestWordLength = 0;
+
+  for (const word of splitArray) {
+    const wordLength = word.length;
+    if (wordLength > longestWordLength) {
+      longestWordLength = wordLength;
+    }
+  }
+  return longestWordLength;
+};
+
+findLongestWordLength('The quick brown fox jumped over the lazy dog');
