@@ -112,3 +112,44 @@ const findLongestWordLength = (str) => {
 };
 
 findLongestWordLength('The quick brown fox jumped over the lazy dog');
+
+// FizzBuzz javascript
+// Write a program that prints the numbers from 1 to 100 . ... But for multiples of three, print "Fizz" instead of the number, and for the multiples of five, print "Buzz" . For numbers which are multiples of both three and five, print "FizzBuzz"
+export const fizzBuzz = () => {
+  let num = 1;
+
+  while (num < 100) {
+    if (num % 3 === 0) {
+      console.log('Fizz');
+    } else if (num % 5 === 0) {
+      console.log('Buzz');
+    } else if (num % 5 === 0 && num & (3 === 0)) {
+      console.log('FizzBuzz');
+    } else {
+      console.log(num);
+    }
+    num += 1;
+  }
+};
+
+fizzBuzz();
+
+// Problem 6: Sum square difference
+// The sum of the squares of the first ten natural numbers is,
+
+// 12 + 22 + ... + 102 = 385
+// The square of the sum of the first ten natural numbers is,
+
+// (1 + 2 + ... + 10)2 = 552 = 3025
+// Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
+
+// Find the difference between the sum of the squares of the first n natural numbers and the square of the sum.
+
+export const sumSquareDifference = (n) => {
+  const sumOfN = (n * (n + 1)) / 2;
+  const sumOfNSquare = (n * (n + 1) * (2 * n + 1)) / 6;
+
+  return sumOfN ** 2 - sumOfNSquare;
+};
+
+sumSquareDifference(100);

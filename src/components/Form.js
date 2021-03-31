@@ -6,6 +6,7 @@ const seasons = ['spring', 'summer', 'autumn', 'winter'];
 
 const Form = () => {
   const { register, handleSubmit, errors } = useForm();
+
   // const [formInput, setFormInput] = useState({
   //   firstName: '',
   //   surname: '',
@@ -22,6 +23,8 @@ const Form = () => {
   //   const value = target.type === 'checkbox' ? target.checked : target.value;
   //   setFormInput({ ...formInput, [name]: value });
   // };
+
+  //
 
   const onSubmit = async (data, e) => {
     e.preventDefault();

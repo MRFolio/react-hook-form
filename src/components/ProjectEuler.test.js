@@ -4,6 +4,7 @@ import {
   multiplesOf3and5,
   palindromeChecker,
   rot13,
+  sumSquareDifference,
 } from './ProjectEuler';
 
 describe('palindrome checker unit tests', () => {
@@ -128,5 +129,16 @@ describe('largestPrimeFactor unit tests', () => {
 
   it('600851475143 should return 6857', () => {
     expect(largestPrimeFactor(600851475143)).toBe(6857);
+  });
+});
+
+describe('sumSquareDifference unit tests', () => {
+  it('should return a number', () => {
+    const result = sumSquareDifference(100);
+    expect(typeof result).toBe('number');
+  });
+
+  it('10 should return 2640', () => {
+    expect(sumSquareDifference(10)).toBe(2640);
   });
 });
