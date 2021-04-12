@@ -127,6 +127,16 @@ const Form = () => {
           <span className={styles.errorMessage}>This field is required</span>
         )}
       </div>
+      <div className={styles.formRow}>
+        <label htmlFor="textarea">Type something</label>
+        <textarea
+          id="textarea"
+          className="tere"
+          data-testid="textbox"
+          name="greeting"
+          role="textbox"
+        ></textarea>
+      </div>
       <span data-testid="html-element">
         <span>Html Element</span>
       </span>

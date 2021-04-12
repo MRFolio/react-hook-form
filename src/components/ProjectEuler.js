@@ -4,6 +4,7 @@ export const palindromeChecker = (str) => {
 };
 
 console.log(palindromeChecker('racecar'));
+console.log(palindromeChecker('tenet'));
 
 export const rot13 = (str) => {
   const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -98,7 +99,7 @@ console.log(largestPrimeFactor(3));
 
 // Your response should be a number.
 
-const findLongestWordLength = (str) => {
+export const findLongestWordLength = (str) => {
   const splitArray = str.split(' ');
   let longestWordLength = 0;
 
@@ -115,7 +116,7 @@ findLongestWordLength('The quick brown fox jumped over the lazy dog');
 
 // FizzBuzz javascript
 // Write a program that prints the numbers from 1 to 100 . ... But for multiples of three, print "Fizz" instead of the number, and for the multiples of five, print "Buzz" . For numbers which are multiples of both three and five, print "FizzBuzz"
-export const fizzBuzz = () => {
+function fizzBuzz() {
   let num = 1;
 
   while (num < 100) {
@@ -130,9 +131,7 @@ export const fizzBuzz = () => {
     }
     num += 1;
   }
-};
-
-fizzBuzz();
+}
 
 // Problem 6: Sum square difference
 // The sum of the squares of the first ten natural numbers is,

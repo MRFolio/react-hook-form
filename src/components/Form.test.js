@@ -134,3 +134,51 @@ describe('Stack', () => {
     expect(stack).toEqual(['1', '2', '3']);
   });
 });
+
+describe('textbox tests', () => {
+  beforeEach(() => {
+    render(<Form />);
+  });
+
+  it('userinput to be empty at first', () => {
+    const box = screen.getByTestId('textbox');
+    expect(box).toBeEmptyDOMElement();
+    expect(box).toBeInTheDocument();
+  });
+
+  it('userinput should be shown correctly in text area', () => {
+    const box = screen.getByTestId('textbox');
+    userEvent.type(box, 'Hello,{enter}World!');
+    expect(box).toHaveValue('Hello,\nWorld!');
+  });
+
+  it('userinput should have 3 empty spaces after user input', () => {
+    const box = screen.getByTestId('textbox');
+    userEvent.type(box, 'Hello,{space}{space}{space}World!');
+    expect(box).toHaveValue('Hello,   World!');
+  });
+
+  it('userinput should have 3 empty spaces and no exclamation mark after user input', () => {
+    const box = screen.getByTestId('textbox');
+    userEvent.type(box, 'Hello,{space}{space}{space}World!{backspace}');
+    expect(box).toHaveValue('Hello,   World');
+    expect(box).not.toHaveValue('Hello,   World!');
+  });
+
+  it('textarea should have correct class', () => {
+    const box = screen.getByTestId('textbox');
+    expect(box).toHaveClass('tere');
+    expect(box).not.toHaveClass('tere2');
+  });
+
+  it('textarea should have correct class2', () => {
+    const box = screen.getByLabelText('Type something');
+    expect(box).toHaveClass('tere');
+    expect(box).not.toHaveClass('tere2');
+  });
+
+  it('textarea should not have focus', () => {
+    const element = screen.getByLabelText('Type something');
+    expect(element).not.toHaveFocus();
+  });
+});
