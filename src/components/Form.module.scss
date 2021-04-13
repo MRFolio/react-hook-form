@@ -55,3 +55,25 @@ input[type='radio'] {
   letter-spacing: 0.04em;
   cursor: pointer;
 }
+
+.btnContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5em;
+  margin: 0.5em auto;
+
+  > button {
+    padding: 0.5em;
+    cursor: pointer;
+  }
+}
+
+.pictureContainer {
+  grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+
+  .picture {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+}

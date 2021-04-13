@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from './Form';
 
@@ -43,17 +43,17 @@ describe('Form tests', () => {
   });
 
   it('button renders properly', () => {
-    const button = screen.getByRole('button', { type: 'button' });
+    const button = screen.getByRole('button', { name: /submit/i });
     expect(button).toBeTruthy;
   });
 
   it('correct button className', () => {
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: /submit/i });
     expect(button).toHaveClass('submitButton');
   });
 
   it('incorrect button className', () => {
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: /submit/i });
     expect(button).not.toHaveClass('tere');
   });
 });
@@ -64,7 +64,7 @@ describe('button', () => {
   });
 
   it('button has button attribute', () => {
-    const button = screen.getByRole('button');
+    const button = screen.getByRole('button', { name: /submit/i });
 
     expect(button).toHaveAttribute('type', 'submit');
     expect(button).not.toHaveAttribute('type', 'button');
@@ -180,5 +180,35 @@ describe('textbox tests', () => {
   it('textarea should not have focus', () => {
     const element = screen.getByLabelText('Type something');
     expect(element).not.toHaveFocus();
+  });
+});
+
+describe('fruitlist tests', () => {
+  beforeEach(() => {
+    render(<Form />);
+  });
+
+  it('should correctly render list', () => {
+    const list = screen.getByRole('list', { name: /fruits/i });
+    expect(list).toBeInTheDocument();
+  });
+
+  it('list length should be 5', () => {
+    const list = screen.getByRole('list', { name: /fruits/i });
+    const { getAllByRole } = within(list);
+    const listItems = getAllByRole('listitem');
+    expect(listItems.length).toBe(5);
+    expect(listItems.length).not.toBe(0);
+    expect(listItems.length).not.toBe(6);
+  });
+
+  it('should render correct fruit names', () => {
+    const list = screen.getByRole('list', { name: /fruits/i });
+    const { getAllByRole } = within(list);
+    const listItems = getAllByRole('listitem');
+    const fruitNames = listItems.map((fruit) => fruit.textContent);
+
+    expect(listItems).toEqual(fruitNames);
+    expect(listItems).not.toEqual(['tere', 'kaks']);
   });
 });

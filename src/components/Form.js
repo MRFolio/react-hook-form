@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import FileUpload from './FileUpload';
 import styles from './Form.module.scss';
 
 const seasons = ['spring', 'summer', 'autumn', 'winter'];
+const fruits = ['Bananas', 'Apples', 'Strawberries', 'Grapes', 'Oranges'];
 
 const Form = () => {
   const { register, handleSubmit, errors } = useForm();
+  const [images, setImages] = useState([]);
 
   // const [formInput, setFormInput] = useState({
   //   firstName: '',
@@ -25,6 +28,22 @@ const Form = () => {
   // };
 
   //
+
+  const handleClick = async () => {
+    try {
+      const response = await fetch('https://dog.ceo/api/breeds/image/random');
+      const { message } = await response.json();
+      setImages([message, ...images]);
+
+      return message;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClear = () => {
+    setImages([]);
+  };
 
   const onSubmit = async (data, e) => {
     e.preventDefault();
@@ -134,7 +153,6 @@ const Form = () => {
           className="tere"
           data-testid="textbox"
           name="greeting"
-          role="textbox"
         ></textarea>
       </div>
       <span data-testid="html-element">
@@ -153,6 +171,37 @@ const Form = () => {
         <button type="submit" className={styles.submitButton}>
           submit
         </button>
+      </div>
+      <div className="tere">
+        <div className={styles.btnContainer}>
+          {' '}
+          <button onClick={handleClick} type="button">
+            Fetch Dog
+          </button>
+          <button onClick={handleClear} type="button">
+            Clear dog images
+          </button>
+        </div>
+        <div className={styles.pictureContainer}>
+          {images?.map((item) => (
+            <figure key={item}>
+              <img
+                className={styles.picture}
+                src={item}
+                alt={`${item.slice(30, 46)}`}
+              />
+              <figcaption>{`${item.slice(30, 46)}`}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <section>
+          <h1>Fruits</h1>
+          <ul aria-label="fruits">
+            {fruits.map((fruit) => (
+              <li key={fruit}>{fruit}</li>
+            ))}
+          </ul>
+        </section>
       </div>
     </form>
   );
