@@ -23,11 +23,13 @@ describe('Form tests', () => {
     const input = screen.getByLabelText('Surname:');
     userEvent.type(input, 'Hire me');
     expect(input).not.toHaveValue('Hello, World!');
+    expect(input).toHaveValue('Hire me');
   });
 
   it('Surname input renders properly', () => {
     const input = screen.getByLabelText('Surname:');
-    expect(input).toBeTruthy;
+    expect(input).toBeTruthy();
+    expect(input).toBeInTheDocument();
   });
 
   it('Surname user input change', () => {
@@ -163,12 +165,20 @@ describe('textbox tests', () => {
     userEvent.type(box, 'Hello,{space}{space}{space}World!{backspace}');
     expect(box).toHaveValue('Hello,   World');
     expect(box).not.toHaveValue('Hello,   World!');
+    expect(box).toHaveAttribute('type', 'submit');
   });
 
   it('textarea should have correct class', () => {
     const box = screen.getByTestId('textbox');
     expect(box).toHaveClass('tere');
     expect(box).not.toHaveClass('tere2');
+  });
+
+  it('should paste text input', () => {
+    const box = screen.getByTestId('textbox');
+    const text = 'Hello, world!';
+    userEvent.paste(box, text);
+    expect(box).toHaveValue(text);
   });
 
   it('textarea should have correct class2', () => {
@@ -183,7 +193,7 @@ describe('textbox tests', () => {
   });
 });
 
-describe('fruitlist tests', () => {
+describe('fruitlist', () => {
   beforeEach(() => {
     render(<Form />);
   });
@@ -207,8 +217,55 @@ describe('fruitlist tests', () => {
     const { getAllByRole } = within(list);
     const listItems = getAllByRole('listitem');
     const fruitNames = listItems.map((fruit) => fruit.textContent);
+    const realFruits = [
+      'Bananas',
+      'Apples',
+      'Strawberries',
+      'Grapes',
+      'Oranges',
+    ];
 
-    expect(listItems).toEqual(fruitNames);
+    expect(fruitNames).toEqual(realFruits);
+    expect(fruitNames.includes('Grapes')).toBeTruthy();
+    expect(fruitNames.includes('tere3')).toBeFalsy();
     expect(listItems).not.toEqual(['tere', 'kaks']);
+  });
+});
+
+describe('async tests', async () => {
+  beforeEach(() => {
+    render(<Form />);
+  });
+
+  it('multiple async calls test', async () => {
+    const asyncMock = jest
+      .fn()
+      .mockResolvedValue('default')
+      .mockResolvedValueOnce('first call')
+      .mockResolvedValueOnce('second call');
+
+    await asyncMock(); // first call
+    await asyncMock(); // second call
+    await asyncMock(); // default
+    await asyncMock(); // default
+
+    expect(asyncMock).toBeCalledTimes(4);
+  });
+
+  it('async test resolve', async () => {
+    const asyncMock = jest.fn().mockResolvedValue('success');
+
+    await expect(asyncMock()).resolves.toBe('success');
+    await expect(asyncMock()).resolves.not.toBe('success2');
+    expect(asyncMock).toBeCalledTimes(2);
+    expect(asyncMock).toBeCalledWith();
+    expect(asyncMock).toHaveBeenLastCalledWith();
+    expect(asyncMock).not.toBeCalledWith('tere');
+  });
+
+  it('async reject test', async () => {
+    const asyncMock = jest.fn().mockRejectedValue(new Error('Async error'));
+
+    await expect(asyncMock()).rejects.toThrow('Async error');
   });
 });
