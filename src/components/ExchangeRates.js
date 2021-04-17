@@ -2,9 +2,10 @@ import { gql, useQuery } from '@apollo/client';
 
 const EXCHANGE_RATES = gql`
   query GetExchangeRates {
-    rates(currency: "USD") {
+    rates(currency: "EUR") {
       currency
       rate
+      name
     }
   }
 `;
@@ -15,10 +16,10 @@ const ExchangeRates = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.rates.map(({ currency, rate }) => (
+  return data.rates.map(({ currency, rate, name }) => (
     <div key={currency}>
       <p>
-        {currency}: {rate}
+        {name} | {currency}: {rate}
       </p>
     </div>
   ));

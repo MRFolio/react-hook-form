@@ -5,8 +5,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './styles/main.scss';
 
+// const client = new ApolloClient({
+//   uri: 'https://48p1r2roz4.sse.codesandbox.io',
+//   cache: new InMemoryCache(),
+// });
 const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+  uri: 'https://api.spacex.land/graphql',
   cache: new InMemoryCache(),
 });
 
