@@ -119,7 +119,6 @@ const Form = () => {
               ref={register({ required: true })}
               type="radio"
               name="favoriteSeason"
-              id="favoriteSeason"
               value={season}
               // onChange={handleChange}
             />
