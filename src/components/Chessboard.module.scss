@@ -1,3 +1,24 @@
+// variables
+$gray-bg: #3f3f3f;
+$gray-bg-darker: #2e2e2e;
+
+// extend :placeholder
+%timer {
+  display: flex;
+
+  > p {
+    display: inline-block;
+    color: #cccccc;
+    background: $gray-bg;
+    // background: #b39c7b;
+    min-width: 3em;
+    font-size: 2em;
+    line-height: 1.2;
+    font-weight: bold;
+    padding: 0 2vmin;
+  }
+}
+
 .container {
   margin: 2em;
   display: grid;
@@ -41,16 +62,10 @@
 }
 
 .dashboard {
-  background: rgb(44, 44, 44);
+  background: #333333;
 
   .clockTop {
-    color: ghostwhite;
-    background: #262421;
-    min-width: 3em;
-    font-size: 2.8em;
-    line-height: 50px;
-    font-weight: bold;
-    padding: 0 2vmin;
+    @extend %timer;
   }
 
   .user {
@@ -82,12 +97,75 @@
     }
 
     .name {
-      color: gray;
+      color: rgb(199, 199, 199);
+      flex: auto;
     }
 
     .rating {
       margin: 0 0.25em 0 0.3em;
-      color: #999;
+      color: rgb(199, 199, 199);
     }
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+
+    .buttons {
+      display: flex;
+      align-items: center;
+
+      > button {
+        flex: 0 0 calc(100% / 6);
+        padding: 0.6em 1.2em;
+        cursor: pointer;
+        background: $gray-bg;
+        color: #bababa;
+        border: none;
+        transition: background 0.35s ease-out, color 0.35s ease-out;
+
+        &:hover {
+          background: #537c23;
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    flex-flow: column;
+    // background: $gray-bg;
+
+    > button {
+      cursor: pointer;
+    }
+
+    .rematch {
+      font-size: 1em;
+      color: #bababa;
+      text-transform: uppercase;
+      height: 6rem;
+      background: $gray-bg;
+      border: none;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    .newOpponent {
+      color: #bababa;
+      background: $gray-bg-darker;
+      border: none;
+      text-transform: uppercase;
+      padding: 1.1em 0;
+      margin: 1px 1px 0 1px;
+      font-size: 0.75em;
+    }
+  }
+
+  .clockBottom {
+    @extend %timer;
   }
 }

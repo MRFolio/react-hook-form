@@ -5,33 +5,35 @@ const Timer = ({ paused }) => {
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
-    let myInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0 || paused) {
-          clearInterval(myInterval);
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
+    if (!paused) {
+      let myInterval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
         }
-      }
-    }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
+        if (seconds === 0) {
+          if (minutes === 0 || paused) {
+            clearInterval(myInterval);
+          } else {
+            setMinutes(minutes - 1);
+            setSeconds(59);
+          }
+        }
+      }, 1000);
+      return () => {
+        clearInterval(myInterval);
+      };
+    }
   });
 
   return (
-    <div>
+    <>
       {minutes === 0 && seconds === 0 ? null : (
-        <h1>
+        <p>
           {' '}
           {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-        </h1>
+        </p>
       )}
-    </div>
+    </>
   );
 };
 
