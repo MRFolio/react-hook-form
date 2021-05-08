@@ -99,6 +99,12 @@ describe('checkbox checked', () => {
   });
 });
 
+it('should correctly ', () => {
+  const button = screen.getByRole('button');
+  expect(button).toHaveAttribute('type', 'submit');
+  expect(button).not.toHaveAttribute('type', 'button');
+});
+
 describe('checkbox not to be required', () => {
   it('checkbox not to be required', () => {
     render(<Form />);

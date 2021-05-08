@@ -11,7 +11,7 @@ const Chessboard = () => {
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
-    if (gameOver) {
+    if (!gameOver) {
       const switchInterval = setInterval(() => {
         setPausedFirst(!pausedFirst);
         setPausedSecond(!pausedSecond);
@@ -25,6 +25,8 @@ const Chessboard = () => {
 
   const handleResign = () => {
     setGameOver(true);
+    setPausedFirst(true);
+    setPausedSecond(true);
   };
 
   const handleRematchClick = () => {
@@ -144,8 +146,8 @@ const Chessboard = () => {
         <div className={styles.panel}>
           {' '}
           <div className={styles.buttons}>
-            <button onClick={handleResign} type="button">
-              Resign{' '}
+            <button disabled={gameOver} onClick={handleResign} type="button">
+              {gameOver ? 'Game over' : 'Resign'}
             </button>
             <button disabled type="button">
               Flip
