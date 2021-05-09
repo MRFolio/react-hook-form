@@ -126,7 +126,12 @@ $gray-bg-darker: #2e2e2e;
         border: none;
         transition: background 0.35s ease-out, color 0.35s ease-out;
 
-        &:hover {
+        &:disabled {
+          cursor: not-allowed;
+          background: grey;
+        }
+
+        &:hover:not(:disabled) {
           background: #537c23;
           color: #fff;
         }

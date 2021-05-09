@@ -30,6 +30,7 @@ const Chessboard = () => {
   };
 
   const handleRematchClick = () => {
+    setGameOver(false);
     setPausedSecond(true);
     setPausedFirst(true);
     // timer start
